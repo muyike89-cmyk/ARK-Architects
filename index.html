@@ -6,14 +6,14 @@
     <title>柏匼建筑 | ARK ARCHITECTS</title>
     <style>
         :root {
-            --cream: #faf9f7; /* 纸张感背景 */
-            --ink: #1a1a1a;   /* 墨迹黑文字 */
-            --accent: #ba1e2b; /* 朱砂红点缀 */
+            --cream: #faf9f7;
+            --ink: #1a1a1a;
+            --accent: #ba1e2b;
             --gray: #888;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* 全局字体格式优化 [1, 2] */
         body {
             background-color: var(--cream);
             color: var(--ink);
@@ -23,7 +23,6 @@
             overflow-x: hidden;
         }
 
-        /* 1. 顶部导航 [2-4] */
         nav {
             position: fixed;
             top: 0; width: 100%;
@@ -47,7 +46,6 @@
         .nav-links a:hover { opacity: 1; color: var(--accent); }
         .lang-toggle { cursor: pointer; border: 1px solid var(--ink); padding: 0.2rem 0.5rem; font-size: 0.65rem; }
 
-        /* 2. 居中哲学板块 [3, 5, 6] */
         .hero {
             height: 100vh;
             display: flex;
@@ -60,19 +58,17 @@
         .hero h1 {
             font-size: clamp(1.8rem, 4vw, 2.5rem);
             font-weight: 300;
-            letter-spacing: 0.8rem; /* 还原高品质间距感 */
+            letter-spacing: 0.8rem;
             margin-bottom: 1.5rem;
         }
         .hero p { color: var(--gray); font-size: 0.85rem; letter-spacing: 0.3rem; text-transform: uppercase; }
 
-        /* 3. 哲学进一步解读 [7, 8] */
         .philosophy-detail { padding: 10rem 10%; }
         .phi-content { max-width: 900px; margin: 0 auto; position: relative; }
         .phi-title { font-size: 1.8rem; font-weight: 400; margin-bottom: 4rem; letter-spacing: 0.2rem; }
         .phi-text-box { border-left: 1px solid var(--accent); padding-left: 2.5rem; margin-top: 2rem; }
         .phi-text-box p { font-size: 1.05rem; color: #555; margin-bottom: 2rem; line-height: 2; }
 
-        /* 4. 作品板块 [7-16] */
         section { padding: 6rem 10%; }
         .section-title { 
             margin-bottom: 3rem; 
@@ -98,7 +94,7 @@
         .project-item:hover { transform: translateY(-10px); }
         .project-img {
             width: 100%;
-            aspect-ratio: 16 / 9; /* 强制 16:9 比例适配移动端 */
+            aspect-ratio: 16 / 9;
             background: #eee;
             margin-bottom: 1.5rem;
             overflow: hidden;
@@ -122,17 +118,43 @@
         .project-info h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.5rem; }
         .project-info p { color: var(--gray); font-size: 0.85rem; }
 
-        /* 5. 关于板块 [10, 16-18] */
+        /* 修改后的 more-content 样式 */
+        .more-content { 
+            display: none;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        .more-content.active {
+            display: grid;
+        }
+        /* 单个项目时居中显示 */
+        .more-content.single {
+            grid-template-columns: 1fr;
+            justify-items: center;
+        }
+
+        .view-more-btn {
+            display: block;
+            margin: 4rem auto;
+            padding: 0.8rem 2.5rem;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            background: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            letter-spacing: 0.15rem;
+            text-transform: uppercase;
+        }
+
         .about-container { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; }
         .about-section h4 { font-size: 1.1rem; margin-bottom: 1.5rem; letter-spacing: 0.1rem; color: var(--accent); }
         .arch-tags { font-size: 0.8rem; color: var(--gray); margin-top: 1rem; }
 
-        /* 6. 联系板块 [18, 19] */
         .contact-section { text-align: center; padding: 10rem 10%; }
         .contact-section p { font-size: 0.75rem; letter-spacing: 0.3rem; opacity: 0.5; margin-bottom: 1rem; }
         .contact-section h2 { font-weight: 300; letter-spacing: 0.1rem; }
 
-        /* 二级页面弹窗 [4, 17, 19] */
         .modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -145,12 +167,12 @@
         .modal-close { position: fixed; top: 2rem; right: 5%; font-size: 2.5rem; cursor: pointer; }
         .modal-gallery img { width: 100%; margin-bottom: 3rem; }
 
-        /* 移动端适配 [4] */
         @media (max-width: 850px) {
             .nav-links { display: none; }
-            .project-grid, .about-container { grid-template-columns: 1fr; }
+            .project-grid, .more-content { grid-template-columns: 1fr; }
             section { padding: 4rem 7%; }
         }
+
     </style>
 </head>
 <body data-lang="cn">
@@ -166,91 +188,97 @@
     </div>
 </nav>
 
-<!-- 首页居中哲学 [6] -->
 <section class="hero">
     <h1 class="t-hero-title">朴素以思辨，精微以格物</h1>
     <p class="t-hero-sub">Simple in Speculation, Micro in Investigation</p>
 </section>
 
-<!-- 哲学进一步解读 [8] -->
 <section id="philosophy" class="philosophy-detail">
     <div class="phi-content">
         <h2 class="t-phi-head">设计哲学 / Philosophy</h2>
         <div class="phi-text-box">
-            <p class="t-phi-p1">“思以致朴，格物致精”，追求一种自我与自然的和谐，致力刻画宁静致远、返璞归真的设计理念。</p>
+            <p class="t-phi-p1">"思以致朴，格物致精"，追求一种自我与自然的和谐，致力刻画宁静致远、返璞归真的设计理念。</p>
             <p class="t-phi-p2">设计以简约与留白、拙朴与雅致、静谧而深邃的理念，在空间美学上追求一种高级感，并不断去激发空间场域的可能性，从而和当下中国人的生活方式相结合。</p>
         </div>
     </div>
 </section>
 
-<!-- 作品板块：山水居停 [8, 11, 12] -->
 <section id="works">
-    <div class="section-title">
-        <h2>山水居停</h2>
-        <div class="fold-btn" onclick="toggleFold('grid-hotels', this)">- FOLD</div>
-    </div>
-    <div id="grid-hotels" class="project-grid">
+    <!-- 1. 山水居停 -->
+    <div class="section-title"><h2>山水居停</h2></div>
+    <div class="project-grid">
         <div class="project-item" onclick="openProject('liyuan')">
             <div class="project-img" style="background-image: url('images/liyuan_cover.jpg');"></div>
-            <div class="project-info">
-                <h3>广西·荔园饭店</h3>
-                <p>酒店 | 南宁 | 65,000㎡ | 2016</p>
-            </div>
+            <div class="project-info"><h3>广西·荔园饭店</h3><p>酒店 | 2016</p></div>
         </div>
         <div class="project-item" onclick="openProject('jinniu')">
             <div class="project-img" style="background-image: url('images/jinniu_cover.jpg');"></div>
+            <div class="project-info"><h3>四川·金牛宾馆</h3><p>酒店 | 2018</p></div>
+        </div>
+    </div>
+    <div id="more-hotels" class="more-content">
+        <!-- 新增项目：济南·鹊华赋 -->
+        <div class="project-item" onclick="openProject('quehuafu')">
+            <div class="project-img" style="background-image: url('images/quehuafu_cover.jpg');"></div>
             <div class="project-info">
-                <h3>四川·金牛宾馆</h3>
-                <p>酒店 | 成都 | 47,876㎡ | 2018</p>
+                <h3>济南·鹊华赋</h3>
+                <p>酒店 | 2024</p>
             </div>
         </div>
     </div>
+    <button class="view-more-btn" onclick="toggleSection('more-hotels', this)">VIEW MORE PROJECTS</button>
 
-    <!-- 古今重构 [13, 14] -->
-    <div class="section-title" style="margin-top: 8rem;">
-        <h2>古今重构</h2>
-        <div class="fold-btn" onclick="toggleFold('grid-reno', this)">- FOLD</div>
-    </div>
-    <div id="grid-reno" class="project-grid">
+    <!-- 2. 古今重构 -->
+    <div class="section-title" style="margin-top: 8rem;"><h2>古今重构</h2></div>
+    <div class="project-grid">
         <div class="project-item" onclick="openProject('beer')">
             <div class="project-img" style="background-image: url('images/huarun_cover.jpg');"></div>
-            <div class="project-info">
-                <h3>安徽·华润啤酒厂旧改</h3>
-                <p>商业/办公 | 淮北 | 148,037㎡ | 2023</p>
-            </div>
-        </div>
-        <div class="project-item">
-            <div class="project-img" style="background-image: url('images/daning_cover.jpg');"></div>
-            <div class="project-info">
-                <h3>上海·大宁自仪厂概念设计</h3>
-                <p>办公/商业/住宅 | 静安 | 140,223㎡ | 2024</p>
-            </div>
+            <div class="project-info"><h3>安徽·华润啤酒厂旧改</h3><p>城市更新 | 2023</p></div>
         </div>
     </div>
+    <div id="more-reno" class="more-content">
+        <!-- 
+        ==================== 新增项目模板（古今重构）====================
+        <div class="project-item" onclick="openProject('xxx')">
+            <div class="project-img" style="background-image: url('images/xxx_cover.jpg');"></div>
+            <div class="project-info">
+                <h3>城市·项目名称</h3>
+                <p>项目类型 | 年份</p>
+            </div>
+        </div>
+        =================================================================
+        -->
+    </div>
+    <button class="view-more-btn" onclick="toggleSection('more-reno', this)">VIEW MORE PROJECTS</button>
 
-    <!-- 乡野拙朴 [14-16] -->
-    <div class="section-title" style="margin-top: 8rem;">
-        <h2>乡野拙朴</h2>
-        <div class="fold-btn" onclick="toggleFold('grid-rural', this)">- FOLD</div>
-    </div>
-    <div id="grid-rural" class="project-grid">
+    <!-- 3. 乡野拙朴 -->
+    <div class="section-title" style="margin-top: 8rem;"><h2>乡野拙朴</h2></div>
+    <div class="project-grid">
+        <!-- 云浮·湾边故乡里 已移到主页展示 -->
+        <div class="project-item" onclick="openProject('bayhome')">
+            <div class="project-img" style="background-image: url('images/bayhome_cover.jpg');"></div>
+            <div class="project-info">
+                <h3>云浮·湾边故乡里</h3>
+                <p>民宿 | 2021</p>
+            </div>
+        </div>
         <div class="project-item">
             <div class="project-img" style="background-image: url('images/tiantai_cover.jpg');"></div>
-            <div class="project-info">
-                <h3>台州·天台方院</h3>
-                <p>民宿 | 天台 | 1,002㎡ | 2019</p>
-            </div>
+            <div class="project-info"><h3>台州·天台方院</h3><p>民宿 | 2019</p></div>
         </div>
     </div>
+    <div id="more-rural" class="more-content">
+        <!-- 展开区域已清空，项目已移到主页 -->
+    </div>
+    <button class="view-more-btn" onclick="toggleSection('more-rural', this)">VIEW MORE PROJECTS</button>
 </section>
 
-<!-- 关于我们 [16, 18] -->
 <section id="about" style="background: #f2f1ef;">
     <div class="section-header"><h2 class="t-about-h">关于我们 / About</h2></div>
     <div class="about-container">
         <div class="about-section">
             <h4 class="t-ent-h">企业介绍</h4>
- 	    <p style="font-weight: 500;">柏匼建筑 ARK Architects</p>
+            <p style="font-weight: 500;">柏匼建筑 ARK Architects</p>
             <p class="t-ent-p" style="font-size: 0.9rem; color: #666;">柏匼建筑成立于2018年秋天。正如柏匼对城市、乡村、自然与人之间美好关系的期冀与追求。我们致力于以国际视野为每个项目带来创新的设计方案，同时在当地的经济、文化、环境与社会发展之间取得平衡。</p>
         </div>
         <div class="about-section">
@@ -259,12 +287,10 @@
             <p class="t-ent-p" style="font-size: 0.9rem; color: #666;">中国建筑学会会员/ 国家一级注册建筑师 / 高级工程师<br>
                 硕士毕业于南京大学，曾供职于国内知名设计公司，担任主创及设计总监。<br>
                 多次荣获全国及省部级优秀工程设计奖项。</p>
-            </div>
         </div>
     </div>
 </section>
 
-<!-- 联系板块 [19] -->
 <section id="contact" class="contact-section">
     <p style="font-size: 0.8rem; opacity: 0.6;">思以致朴 · 格物致精 </p><br>
     <div class="contact-info">
@@ -273,14 +299,12 @@
     <p style="font-size: 0.8rem; color: var(--gray); margin-top: 1rem;">SHANGHAI</p>
 </section>
 
-<!-- 二级页面详情弹窗 [19] -->
 <div id="project-modal" class="modal">
     <div class="modal-close" onclick="closeProject()">&times;</div>
     <div id="modal-content" class="modal-gallery"></div>
 </div>
 
 <script>
-// 1. 中英文切换逻辑 [20, 21]
 const dict = {
     cn: {
         works: "作品 WORKS", phi: "哲学 PHILOSOPHY", about: "关于 ABOUT", contact: "联系 CONTACT",
@@ -303,7 +327,6 @@ function toggleLanguage() {
     document.querySelector('.lang-toggle').innerText = lang === 'cn' ? 'EN' : '中';
 }
 
-// 2. 独立折叠逻辑 [22]
 function toggleFold(id, btn) {
     const grid = document.getElementById(id);
     grid.classList.toggle('collapsed');
@@ -311,11 +334,13 @@ function toggleFold(id, btn) {
     btn.innerText = grid.classList.contains('collapsed') ? dict[lang].unfold : dict[lang].fold;
 }
 
-// 3. 项目详情数据 [22, 23]
 const projectData = {
-    liyuan: ['images/liyuan_1.jpg', 'images/liyuan_2.jpg', 'images/liyuan_3.jpg'],
-    jinniu: ['images/jinniu_1.jpg', 'images/jinniu_2.jpg'],
-    beer: ['images/beer_1.jpg', 'images/beer_2.jpg']
+    liyuan: ['images/liyuan_P1.jpg', 'images/liyuan_P2.jpg', 'images/liyuan_P3.jpg'],
+    jinniu: ['images/jinniu_P1.jpg', 'images/jinniu_P2.jpg', 'images/jinniu_P3.jpg'],
+    beer: ['images/beer_1.jpg', 'images/beer_2.jpg'],
+    // 新增项目详情图片
+    quehuafu: ['images/quehuafu_P1.jpg', 'images/quehuafu_P2.jpg', 'images/quehuafu_P3.jpg', 'images/quehuafu_P4.jpg', 'images/quehuafu_P5.jpg', 'images/quehuafu_P6.jpg'],
+    bayhome: ['images/bayhome_P1.jpg', 'images/bayhome_P2.jpg', 'images/bayhome_P3.jpg', 'images/bayhome_P4.jpg', 'images/bayhome_P5.jpg', 'images/bayhome_P6.jpg', 'images/bayhome_P7.jpg', 'images/bayhome_P8.jpg']
 };
 
 function openProject(id) {
@@ -328,7 +353,19 @@ function openProject(id) {
 
 function closeProject() {
     document.getElementById('project-modal').style.display = 'none';
-    document.body.style.overflow = 'auto'; // 恢复滚动 [24]
+    document.body.style.overflow = 'auto';
+}
+
+// 修改后的 toggleSection 函数：通过添加/移除 active class 控制显示
+function toggleSection(id, btn) {
+    const content = document.getElementById(id);
+    if (content.classList.contains('active')) {
+        content.classList.remove('active');
+        btn.innerText = "VIEW MORE PROJECTS";
+    } else {
+        content.classList.add('active');
+        btn.innerText = "VIEW LESS PROJECTS";
+    }
 }
 </script>
 
