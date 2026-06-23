@@ -222,9 +222,16 @@
             <div class="project-img" style="background-image: url('images/quehuafu_cover.jpg');"></div>
             <div class="project-info">
                 <h3>济南·鹊华赋</h3>
-                <p>酒店 | 2024</p>
+                <p>住宅 | 2024</p>
             </div>
         </div>
+   	<div class="project-item" onclick="openProject('jiacun')">
+        	<div class="project-img" style="background-image: url('images/jiacun_cover.jpg');"></div>
+        	<div class="project-info">
+          	<h3>石家庄·贾村33#</h3>
+         	<p>住宅 | 2024</p>
+        	</div>
+    	</div>
     </div>
     <button class="view-more-btn" onclick="toggleSection('more-hotels', this)">VIEW MORE PROJECTS</button>
 
@@ -234,6 +241,10 @@
         <div class="project-item" onclick="openProject('beer')">
             <div class="project-img" style="background-image: url('images/huarun_cover.jpg');"></div>
             <div class="project-info"><h3>安徽·华润啤酒厂旧改</h3><p>城市更新 | 2023</p></div>
+        </div>
+        <div class="project-item" onclick="openProject('daning')">
+            <div class="project-img" style="background-image: url('images/daning_cover.jpg');"></div>
+            <div class="project-info"><h3>上海·大宁自仪厂项目</h3><p>住宅办公 | 2023</p></div>
         </div>
     </div>
     <div id="more-reno" class="more-content">
@@ -262,12 +273,15 @@
                 <p>民宿 | 2021</p>
             </div>
         </div>
-        <div class="project-item">
+        <div class="project-item" onclick="openProject('tiantai')">
             <div class="project-img" style="background-image: url('images/tiantai_cover.jpg');"></div>
-            <div class="project-info"><h3>台州·天台方院</h3><p>民宿 | 2019</p></div>
+            <div class="project-info">
+                <h3>天台·寒岩山居</h3>
+                <p>民宿 | 2021</p>
+            </div>
         </div>
     </div>
-    <div id="more-rural" class="more-content">
+    <div id="more-rural" class="more-content empty">
         <!-- 展开区域已清空，项目已移到主页 -->
     </div>
     <button class="view-more-btn" onclick="toggleSection('more-rural', this)">VIEW MORE PROJECTS</button>
@@ -337,10 +351,13 @@ function toggleFold(id, btn) {
 const projectData = {
     liyuan: ['images/liyuan_P1.jpg', 'images/liyuan_P2.jpg', 'images/liyuan_P3.jpg'],
     jinniu: ['images/jinniu_P1.jpg', 'images/jinniu_P2.jpg', 'images/jinniu_P3.jpg'],
-    beer: ['images/beer_1.jpg', 'images/beer_2.jpg'],
+    beer: ['images/huarun_P1.jpg', 'images/huarun_P2.jpg'],
     // 新增项目详情图片
     quehuafu: ['images/quehuafu_P1.jpg', 'images/quehuafu_P2.jpg', 'images/quehuafu_P3.jpg', 'images/quehuafu_P4.jpg', 'images/quehuafu_P5.jpg', 'images/quehuafu_P6.jpg'],
-    bayhome: ['images/bayhome_P1.jpg', 'images/bayhome_P2.jpg', 'images/bayhome_P3.jpg', 'images/bayhome_P4.jpg', 'images/bayhome_P5.jpg', 'images/bayhome_P6.jpg', 'images/bayhome_P7.jpg', 'images/bayhome_P8.jpg']
+    bayhome: ['images/bayhome_P1.jpg', 'images/bayhome_P2.jpg', 'images/bayhome_P3.jpg', 'images/bayhome_P4.jpg', 'images/bayhome_P5.jpg', 'images/bayhome_P6.jpg', 'images/bayhome_P7.jpg', 'images/bayhome_P8.jpg'],
+   daning: ['images/daning_P1.jpg', 'images/daning_P2.jpg', 'images/daning_P3.jpg'],
+   tiantai: ['images/tiantai_P1.jpg', 'images/tiantai_P2.jpg'],
+   jiacun: ['images/jiacun_P1.jpg', 'images/jiacun_P2.jpg', 'images/jiacun_P3.jpg', 'images/jiacun_P4.jpg', 'images/jiacun_P5.jpg']
 };
 
 function openProject(id) {
